@@ -13,13 +13,11 @@ process samtoolsSort {
     
     script:
     """
-    samtools view -Sb -q 10 $sample_sam > temp666.bam
+    samtools view -Sb -q 10 $sample_sam > temp000.bam
     rm "\$(readlink -f "${sample_sam}")"
     rm $sample_sam
-    samtools sort -n -o temp777.bam temp666.bam
-    samtools fixmate -m temp777.bam temp888.bam
-    samtools sort --threads $task.cpus temp888.bam > ${sample_sam.baseName}_sorted.bam
-    rm temp666.bam temp777.bam temp888.bam
+    samtools sort --threads $task.cpus temp000.bam > ${sample_sam.baseName}_sorted.bam
+    rm temp000.bam
     samtools index ${sample_sam.baseName}_sorted.bam
     """
 }

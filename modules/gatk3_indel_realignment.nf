@@ -8,6 +8,7 @@ process realignIndel {
 
     input:
     path dedup_bam
+    path dedup_bai
     path reference
     file "${reference.baseName}.fasta.fai"
     file "${reference.baseName}.dict"
@@ -17,7 +18,7 @@ process realignIndel {
 
     script:
     """
-    gatk3 -T RealignerTargetCreator -R $reference -I $dedup_bam -o ${dedup_bam[0].baseName}_intervals.intervals -U ALLOW_UNINDEXED_BAM
-    gatk3 -T IndelRealigner -R $reference -I $dedup_bam -targetIntervals ${dedup_bam[0].baseName}_intervals.intervals --consensusDeterminationModel USE_READS  -o ${dedup_bam[0].baseName}_realigned.bam -U ALLOW_UNINDEXED_BAM
+    gatk3 -T RealignerTargetCreator -R $reference -I $dedup_bam -o ${dedup_bam[0].baseName}_intervals.intervals 
+    gatk3 -T IndelRealigner -R $reference -I $dedup_bam -targetIntervals ${dedup_bam[0].baseName}_intervals.intervals --consensusDeterminationModel USE_READS  -o ${dedup_bam[0].baseName}_realigned.bam 
     """
 }
